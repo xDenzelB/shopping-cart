@@ -1,4 +1,5 @@
-import { checkAuth, logout, createItem } from '../fetch-utils.js';
+import { checkAuth, logout, createItem, getItem, buyItem } from '../fetch-utils.js';
+import { renderShoppingList } from '../render-utils.js';
 
 const form = document.querySelector('.item-form');
 const deleteButton = document.querySelector('.delete');
@@ -30,3 +31,21 @@ form.addEventListener('submit', async (e) => {
 window.addEventListener('load' async() => {
     // load up the new/old shopping list 
 })
+
+
+async function displayShoppingListItems() {
+    const shoppingList = await getItem();
+
+    shopList.textContent = '';
+
+    for (let item of items) {
+        const itemEl = renderShoppingList(item);
+
+        itemEl.addEventListener('click', async() => {
+            await buyItem(item.id);
+
+            displayShoppingListItems();
+        });
+        shopList.append(itemEl);
+    }
+}

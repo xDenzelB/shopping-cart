@@ -7,8 +7,9 @@ export function renderShoppingList(item) {
     itemDiv.classList.add(item.complete ? 'complete' : 'incomplete');
 
     itemDiv.classList.add('item');
+    itemDiv.classList.add('quantity');
 
-    itemP.textContent = item.item;
+    itemP.textContent = `${item.item} ${item.quantity}`;
 
     itemDiv.append(itemP);
 
