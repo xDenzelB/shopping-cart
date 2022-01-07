@@ -28,5 +28,5 @@ form.addEventListener('submit', async (e) => {
 })
 
 window.addEventListener('load' async() => {
-    
+    // load up the new/old shopping list 
 })
