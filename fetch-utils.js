@@ -1,7 +1,42 @@
-const SUPABASE_URL = '';
-const SUPABASE_KEY = '';
+const SUPABASE_URL = 'https://wegojudrlwgimzqmwooj.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MTMyMzk4MywiZXhwIjoxOTU2ODk5OTgzfQ.ppPqz9JNeolxcyL-9q4sapm5i3lv7v2yH_FQIOKHJOc';
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+export async function createItem(item, quantity) {
+    const response = await client 
+        .from('shopping')
+        .insert ([{ item, quantity }]);
+
+    return checkError(response);
+}
+
+export async function getItem() {
+    const response = await client 
+        .from('shopping')
+        .select();
+
+    return checkError(response);
+}
+
+export async function buyItem(id) {
+    const response = await client 
+        .from('shopping')
+        .update({ bought: true })
+        .match({ id: id });
+
+    return checkError(response);
+}
+
+export async function deleteAllItems() {
+    const response = await client
+        .from('shopping')
+        .delete();
+
+    return checkError(response);
+}
+
+
 
 export async function getUser() {
     return client.auth.session();
