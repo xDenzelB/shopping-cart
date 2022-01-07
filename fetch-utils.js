@@ -6,7 +6,8 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 export async function createItem(item, quantity) {
     const response = await client 
         .from('shopping')
-        .insert ([{ item, quantity }]);
+        .insert ([{ item, quantity, bought: false }])
+        .single();
 
     return checkError(response);
 }
@@ -14,7 +15,8 @@ export async function createItem(item, quantity) {
 export async function getItem() {
     const response = await client 
         .from('shopping')
-        .select();
+        .select()
+        .order('bought');
 
     return checkError(response);
 }
@@ -28,10 +30,19 @@ export async function buyItem(id) {
     return checkError(response);
 }
 
+
 export async function deleteAllItems() {
     const response = await client
         .from('shopping')
         .delete();
+
+    return checkError(response);
+}
+export async function deleteIndividualItems(item) {
+    const response = await client
+        .from('shopping')
+        .delete({ item })
+        .match({ item: item });
 
     return checkError(response);
 }

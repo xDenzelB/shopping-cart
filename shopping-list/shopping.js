@@ -1,4 +1,4 @@
-import { checkAuth, logout, createItem, getItem, buyItem, deleteAllItems } from '../fetch-utils.js';
+import { checkAuth, logout, createItem, getItem, buyItem, deleteAllItems, } from '../fetch-utils.js';
 import { renderShoppingList } from '../render-utils.js';
 
 const form = document.querySelector('.item-form');
@@ -35,7 +35,7 @@ window.addEventListener('load', async() => {
 });
 
 
-async function displayShoppingListItems() {
+export async function displayShoppingListItems() {
     const items = await getItem();
 
     shopList.textContent = '';
@@ -44,11 +44,15 @@ async function displayShoppingListItems() {
         const itemEl = renderShoppingList(item);
 
         itemEl.addEventListener('click', async() => {
-            console.log(itemEl);
             await buyItem(item.id);
+            
+
+        
+            
 
             displayShoppingListItems();
         });
+
         shopList.append(itemEl);
     }
 }
@@ -58,3 +62,4 @@ deleteButton.addEventListener('click', async() => {
     await displayShoppingListItems();
 
 });
+
